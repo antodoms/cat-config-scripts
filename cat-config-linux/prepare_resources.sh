@@ -53,7 +53,7 @@ function prepare_base_resources() {
 	run_sed "logging-server" logging_pairs
 
 	local -A node_pairs=(
-		"enableCacheDatabaseStorage" "true"
+		"shouldUseCacheDatabaseStorage" "true"
 		"unconfirmedTransactionsCacheMaxSize" "10'000'000"
 		"connectTimeout" "15s"
 		"syncTimeout" "120s")
@@ -70,7 +70,7 @@ function prepare_base_resources() {
     run_sed "network" network_pairs
 
 	local -A user_pairs=(
-		"bootPrivateKey" "$boot_key"
+		"bootKey" "$boot_key"
 		"dataDirectory" "$local_path/data"
         "pluginsDirectory" "$catapult_server_src/build/bin")
 	run_sed "user" user_pairs
@@ -89,7 +89,7 @@ function prepare_api_resources() {
 	run_sed "logging-broker" logging_pairs
 
 	local -A node_pairs=(
-		"enableAutoSyncCleanup" "false"
+		"shouldEnableAutoSyncCleanup" "false"
 		"friendlyName" "{INSERT_API_NAME}"
 		"roles" "Api")
 	run_sed node node_pairs
@@ -107,14 +107,14 @@ function prepare_peer_resources() {
 	done
 
 	local -A node_pairs=(
-		"enableSingleThreadPool" "true"
+		"shouldUseSingleThreadPool" "true"
 		"friendlyName" "{INSERT_PEER_NAME}"
 		"roles" "Peer")
 	run_sed node node_pairs
 
 	local -A harvesting_pairs=(
-		"harvesterPrivateKey" "{INSERT_HARVESTER_KEY}"
-		"enableAutoHarvesting" "true")
+		"harvestKey" "{INSERT_HARVESTER_KEY}"
+		"isAutoHarvestingEnabled" "true")
 	run_sed harvesting harvesting_pairs
 }
 
